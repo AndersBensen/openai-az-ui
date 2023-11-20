@@ -16,12 +16,18 @@ import remarkMath from 'remark-math';
 import rehypeMathjax from 'rehype-mathjax';
 
 export const ChatMessage = ({message, index}) => {
+  
     // var message = message['message']
     var isEditing = false
     // console.log("yoyoy",{message})
     // console.log("yoyoy",message['message'])
     // console.log("-----")
     // console.log("hii",index)
+    const copyOnClick = () => {
+      if (!navigator.clipboard) return;
+      navigator.clipboard.writeText(message.content)
+    };
+
     return (
         <div
           className={`group md:px-4 ${
@@ -178,7 +184,7 @@ export const ChatMessage = ({message, index}) => {
                     (
                       <button
                         className="invisible group-hover:visible focus:visible text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-                        // onClick={copyOnClick}
+                        onClick={copyOnClick}
                       >
                         <IconCopy size={20} />
                       </button>

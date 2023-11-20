@@ -20,13 +20,10 @@ import {
 
   
 export const ChatInput = ({sendMsg, textareaRef}) => {
-
-    console.log("are we even in hre")
-
+  
     const [content, setContent] = useState();
 
     const handleChange = (e) => {
-        console.log("changing")
         const value = e.target.value;
         // const maxLength = selectedConversation?.model.maxLength;
     
@@ -45,9 +42,7 @@ export const ChatInput = ({sendMsg, textareaRef}) => {
       };
 
     const handleKeyDown = (e) => {
-        console.log("click", e)
         if (e.key === 'Enter' && !e.shiftKey) {
-            console.log("YOU CLCIKED ENTER")
             e.preventDefault();
             handleSend();
         }

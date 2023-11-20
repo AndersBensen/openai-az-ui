@@ -10,36 +10,35 @@ import { Chat } from "../components/Chat/Chat";
 
 export default function Home() {
   
-  const [conv, setConv] = useState(null);
+  const [conv, setConv] = useState([]);
+
+  const [currentSystemPrompt, setCurrentSystemPrompt] = useState(null)
+  const [currentTemperature, setCurrentTemperature] = useState(null)
 
 
   // REMOVE THIS -- START
-  var selectedConversation = [
-      {   
-          role: "user",
-          content: "FIRST MSG YALL"
-      },
-      {
-          role: "assistant",
-          content: "HI THERE",
-      },
-      {   
-          role: "user",
-          content: "HI BACK U"
-      },
-      {
-          role: "assistant",
-          content: "AWWW SHIT"
-      }
-  ]
-
-  if (conv == null) {
-    setConv(selectedConversation)
-  }
+  // var selectedConversation = [
+  //     // {   
+  //     //     role: "user",
+  //     //     content: "FIRST MSG YALL"
+  //     // },
+  //     // {
+  //     //     role: "assistant",
+  //     //     content: "HI THERE",
+  //     // },
+  //     // {   
+  //     //     role: "user",
+  //     //     content: "HI BACK U"
+  //     // },
+  //     // {
+  //     //     role: "assistant",
+  //     //     content: "AWWW SHIT"
+  //     // }
+  // ]
+  // if (conv == null) {
+  //   setConv(selectedConversation)
+  // }
   // REMOVE THIS -- END
-  
-  var prompt = "we have no prompt"
-  var temperature = 1
 
   const handleUpdateConversation = async (messages) => {
     // First we update the messages with the one we sent
@@ -47,8 +46,8 @@ export default function Home() {
 
     const chatBody = {
       messages: messages,
-      prompt: prompt,
-      temperature: temperature,
+      prompt: currentSystemPrompt,
+      temperature: currentTemperature,
     };
 
     const body = JSON.stringify(chatBody);
@@ -108,7 +107,12 @@ export default function Home() {
             <Converationbar/>
 
             <div className="flex flex-1">
-            <Chat selectedConversation={conv} updateSelectedConversation={handleUpdateConversation}/>
+            <Chat 
+              selectedConversation={conv} 
+              updateSelectedConversation={handleUpdateConversation}
+              onChangePrompt={setCurrentSystemPrompt}
+              onChangeTemperature={setCurrentTemperature}
+            />
             </div>
             <Promptbar/>
 

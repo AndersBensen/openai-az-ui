@@ -1,8 +1,9 @@
 TODO; 
 
-- initial prompt/temperature chosing
+- (X) initial prompt/temperature chosing
 - regenerate chat
-- code/markdown 
+- code/markdown output
 - localstorage to save conversations
 - chose conversations to the left
 - save & chose prompts to the right
+- finish up & clean

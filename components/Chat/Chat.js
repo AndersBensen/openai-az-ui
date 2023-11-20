@@ -8,8 +8,9 @@ import {
 
 import { ChatInput } from "./ChatInput"
 import { ChatMessage } from "./ChatMessage"
+import { InitialChat } from './InitialChat';
 
-export const Chat = ({selectedConversation, updateSelectedConversation}) => {
+export const Chat = ({selectedConversation, updateSelectedConversation, onChangePrompt, onChangeTemperature}) => {
 
     const messagesEndRef = useRef(null);
     const chatContainerRef = useRef(null);
@@ -41,21 +42,28 @@ export const Chat = ({selectedConversation, updateSelectedConversation}) => {
                 ref={chatContainerRef}
             >
                 
-                {selectedConversation.map((message, index) => (
-                    <ChatMessage message={message} key={index}>
-                    </ChatMessage>
-                ))
-                }
-
-                <div
-                    className="h-[162px] bg-white dark:bg-[#343541]"
-                    ref={messagesEndRef}
-                />
-                <ChatInput 
-                    sendMsg={handleSend}
-                    textareaRef={textareaRef}
-                />
+                {selectedConversation.length == 0 ? (
+                    <>
+                        <InitialChat onChangePrompt={onChangePrompt} onChangeTemperature={onChangeTemperature}/>
+                    </>
+                    
+                ) : (
+                    <>
+                        {selectedConversation.map((message, index) => (
+                            <ChatMessage message={message} key={index}/>
+                        ))
+                        }
+                        <div
+                            className="h-[162px] bg-white dark:bg-[#343541]"
+                            ref={messagesEndRef}
+                        />
+                    </>
+                )}
             </div>
+            <ChatInput 
+                sendMsg={handleSend}
+                textareaRef={textareaRef}
+            />
         </div>
     )
 }
