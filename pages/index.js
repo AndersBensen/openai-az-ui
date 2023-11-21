@@ -67,6 +67,8 @@ export default function Home() {
     else {
       const responeBody = await response.json()
 
+      console.log("response body; ",responeBody)
+
       const updatedMessages = [
         ...messages,
         {role: "assistant", content: responeBody.content}

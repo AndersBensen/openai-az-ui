@@ -1,26 +1,15 @@
 
 import {
-    IconArrowDown,
-    IconBolt,
-    IconBrandGoogle,
-    IconPlayerStop,
-    IconRepeat,
     IconSend,
   } from '@tabler/icons-react';
 
   import {
-    KeyboardEvent,
-    MutableRefObject,
-    useCallback,
-    useContext,
-    useEffect,
-    useRef,
     useState,
   } from 'react';
 
   
 export const ChatInput = ({sendMsg, textareaRef}) => {
-  
+
     const [content, setContent] = useState();
 
     const handleChange = (e) => {

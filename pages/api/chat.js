@@ -23,7 +23,6 @@ export default async function handler(req) {
     try {
         const body = await req.json()
         const {messages, prompt, temperature} = body
-        console.log("RECEIVED MSG; ", {messages}, "N PROMPT;", {prompt}, "N TEMP", temperature)
 
         var messagesToSend = [
             {
@@ -50,6 +49,7 @@ export default async function handler(req) {
         // let content = result.choices[0].message.content
         // console.log(messages.slice(-1)[0].content)
         let content = "your last message was; " + messages.slice(-1)[0].content
+        // let content = 'Sure, here\'s an example of a for loop in Python:\n\n```python\nfruits = ["apple", "banana", "cherry"]\nfor fruit in fruits:\n  print(fruit)\n```\n\nIn this example, we have a list of fruits called `fruits`. We use the `for` loop to iterate over each element in the list, assigning the current element to the variable `fruit` on each iteration. Then we print out the value of `fruit`. The output will be:\n\n```\napple\nbanana\ncherry\n```\n\nYou can replace the `fruits` list with any sequence (such as a string or a range of numbers) and modify the code inside the loop to perform different actions as needed.'
 
         return new Response(JSON.stringify({content}, 200))
     } catch {

@@ -1,9 +1,13 @@
 TODO; 
 
+- (X) setup initial gui layout
+- (X) make server with @azure/openai & @azure/identity
+- (X) enable chatting
 - (X) initial prompt/temperature chosing
-- regenerate chat
-- code/markdown output
+- (X) code/markdown output (Mostly, but something about globals.css is weird)
 - localstorage to save conversations
 - chose conversations to the left
+- regenerate chat
 - save & chose prompts to the right
+- edit former messages (nice to have)
 - finish up & clean
