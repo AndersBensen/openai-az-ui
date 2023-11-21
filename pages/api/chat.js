@@ -11,12 +11,12 @@ export const DEFAULT_SYSTEM_PROMPT =
 export const DEFAULT_TEMPERATURE = parseFloat(process.env.NEXT_PUBLIC_DEFAULT_TEMPERATURE || "1");
 
 
-export const AZURE_OPENAI_MAX_TOKENS = process.env.AZURE_OPENAI_MAX_TOKENS || null; 
+export const AZURE_OPENAI_MAX_TOKENS = parseInt(process.env.AZURE_OPENAI_MAX_TOKENS) || null; 
 export const AZURE_OPENAI_ENDPOINT = process.env.AZURE_OPENAI_ENDPOINT || '';
 export const AZURE_OPENAI_SUBSCRIPTION_ID = process.env.AZURE_OPENAI_SUBSCRIPTION_ID || '';
 export const AZURE_OPENAI_SECRET = process.env.AZURE_OPENAI_SECRET || '';
+export const AZURE_OPENAI_DEPLOYMENT_ID = process.env.AZURE_OPENAI_DEPLOYMENT_ID || '';
 export const AZURE_TENANT_ID = process.env.AZURE_TENANT_ID || '';
-export const AZURE_DEPLOYMENT_ID = process.env.AZURE_DEPLOYMENT_ID || '';
 
 
 export default async function handler(req) {
@@ -29,8 +29,8 @@ export default async function handler(req) {
             {
                 role: 'system',
                 content: prompt,
-                },
-                ...messages,
+            },
+            ...messages,
         ]
 
         console.log("SENDING THESE MESSAGES", messagesToSend)
@@ -39,10 +39,10 @@ export default async function handler(req) {
         // const client = new OpenAIClient(AZURE_OPENAI_ENDPOINT, credential);
 
         // const result = await client.getChatCompletions(
-        //     AZURE_DEPLOYMENT_ID, 
+        //     AZURE_OPENAI_DEPLOYMENT_ID, 
         //     messagesToSend,
         //     {
-        //         maxTokens: 128, 
+        //         maxTokens: AZURE_OPENAI_MAX_TOKENS, 
         //         temperature: temperature
         //     }
         // );
