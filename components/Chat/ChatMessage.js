@@ -100,7 +100,7 @@ export const ChatMessage = ({message, index}) => {
                       },
                     }}
                   >
-                    {`${message.content}`}
+                    {message.content}
                   </MemoizedReactMarkdown>
     
                   <div className="md:-mr-8 ml-1 md:ml-0 flex flex-col md:flex-row gap-4 md:gap-1 items-center md:items-start justify-end md:justify-start">

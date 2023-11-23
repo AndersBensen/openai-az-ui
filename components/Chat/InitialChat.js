@@ -8,7 +8,7 @@ export const InitialChat = ({onChangeTemperature, onChangePrompt}) => {
 
     // --------- SystemPrompt stuff -------------        
     const [systemPrompt, setSystemPrompt] = useState("You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.");
-
+    onChangePrompt(systemPrompt)
 
     const textareaRef = useRef(null);
     const maxLength = 128
@@ -38,24 +38,13 @@ export const InitialChat = ({onChangeTemperature, onChangePrompt}) => {
 
     // --------- Temperature stuff -----------
     const [temperature, setTemperature] = useState(0.5);
+    onChangeTemperature(temperature)
 
     const handleTemperatureChange = (event) => {
         const newTemperature = parseFloat(event.target.value);
         setTemperature(newTemperature);
         onChangeTemperature(newTemperature);
     };
-
-    // -------- Common stuff ----------
-    // We set the default prompt & temperature all the way back in index at first render
-    const firstRender = useRef(true);
-    useEffect(() => {
-        if (firstRender.current) {
-            firstRender.current = false;
-            return;
-        }
-        onChangePrompt(systemPrompt)
-        onChangeTemperature(temperature)
-    });
 
 
     return (
