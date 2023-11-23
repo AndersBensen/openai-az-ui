@@ -13,8 +13,6 @@ import remarkMath from 'remark-math';
 import rehypeMathjax from 'rehype-mathjax';
 
 export const ChatMessage = ({message, index}) => {
-
-    console.log("MESSAGE I RECEIVED; ", {message})
   
     const copyOnClick = () => {
       if (!navigator.clipboard) return;
