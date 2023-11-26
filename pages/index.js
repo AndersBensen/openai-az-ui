@@ -5,40 +5,26 @@ import { useState, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Promptbar } from "../components/Prompt/Promptbar";
-import { Converationbar } from "../components/Conversation/Conversationbar";
+import { Conversationbar } from "../components/Conversation/Conversationbar";
 import { Chat } from "../components/Chat/Chat";
 
 export default function Home() {
   
+  // Conversation states
   const [conv, setConv] = useState([]);
-
   const [currentSystemPrompt, setCurrentSystemPrompt] = useState(null)
   const [currentTemperature, setCurrentTemperature] = useState(null)
 
-
-  // REMOVE THIS -- START
-  // var selectedConversation = [
-  //     // {   
-  //     //     role: "user",
-  //     //     content: "FIRST MSG YALL"
-  //     // },
-  //     // {
-  //     //     role: "assistant",
-  //     //     content: "HI THERE",
-  //     // },
-  //     // {   
-  //     //     role: "user",
-  //     //     content: "HI BACK U"
-  //     // },
-  //     // {
-  //     //     role: "assistant",
-  //     //     content: "AWWW SHIT"
-  //     // }
-  // ]
-  // if (conv == null) {
-  //   setConv(selectedConversation)
-  // }
-  // REMOVE THIS -- END
+  // PromptBar states
+  const [prompts, setPrompts] = useState([]);
+  
+  // THINGS TO DO THERE IS A STATE CHANGE OF THE MAIN PAGE
+  useEffect(() => {
+    const loadedPrompts = localStorage.getItem('prompts');
+    if (loadedPrompts) {
+        setPrompts(JSON.parse(loadedPrompts))
+    }
+  }, []); 
 
   const handleUpdateConversation = async (messages) => {
     // First we update the messages with the one we sent
@@ -66,8 +52,6 @@ export default function Home() {
     }
     else {
       const responeBody = await response.json()
-
-      console.log("response body; ",responeBody)
 
       const updatedMessages = [
         ...messages,
@@ -106,7 +90,7 @@ export default function Home() {
         {/* <div className="flex h-full w-full pt-[48px] sm:pt-0"> */}
 
         <div className="flex h-full w-full pt-[48px] sm:pt-0">
-            <Converationbar/>
+            <Conversationbar/>
 
             <div className="flex flex-1">
             <Chat 
@@ -116,7 +100,10 @@ export default function Home() {
               onChangeTemperature={setCurrentTemperature}
             />
             </div>
-            <Promptbar/>
+            <Promptbar
+              prompts={prompts}
+              setPrompts={setPrompts}
+            />
 
         </div>
         {/* </div> */}

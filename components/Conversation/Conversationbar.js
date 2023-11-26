@@ -1,17 +1,25 @@
+import { Sidebar } from '../Sidebar/Sidebar';
 
-export const Converationbar = () => {
+export const Conversationbar = ({ conversations }) => {
+
+
+    const handleCreateConversation = () => { 
+
+        console.log("CREATE CONVERSATION")
+
+    }
+    
+    const handleSearch = () => { 
+
+    }
 
     return (
-
-        <div
-            className={`fixed top-0 left-0 z-40 flex h-full w-[260px] flex-none flex-col space-y-2 bg-[#202123] p-2 text-[14px] transition-all sm:relative sm:top-0`}
-            >
-        </div>
-        // <div
-        //     className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-        //     // onKeyDown={handleEnter}
-        // >
-
-        // </div>
+        <Sidebar
+            sidePlacement={"right"}
+            createItemTitle={"New chat"}
+            items={conversations}
+            handleCreateItem={handleCreateConversation}
+            handleSearch={handleSearch}
+        />
     )
 }

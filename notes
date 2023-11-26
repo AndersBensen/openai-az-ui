@@ -5,9 +5,10 @@ TODO;
 - (X) enable chatting
 - (X) initial prompt/temperature chosing
 - (X) code/markdown output (Mostly, but something about globals.css is weird)
-- localstorage to save conversations
-- chose conversations to the left
-- regenerate chat
-- save & chose prompts to the right
+- (X) save & chose prompts to the right
+- save & chose conversations to the left (must have)
+- regenerate chat (should have)
+- add loading ui when chat is answering (should have)
 - edit former messages (nice to have)
+- search for prompts in init (nice to have)
 - finish up & clean

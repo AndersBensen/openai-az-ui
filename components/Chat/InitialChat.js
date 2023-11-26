@@ -31,8 +31,8 @@ export const InitialChat = ({onChangeTemperature, onChangePrompt}) => {
 
     useEffect(() => {
         if (textareaRef && textareaRef.current) {
-        textareaRef.current.style.height = 'inherit';
-        textareaRef.current.style.height = `${textareaRef.current?.scrollHeight}px`;
+            textareaRef.current.style.height = 'inherit';
+            textareaRef.current.style.height = `${textareaRef.current?.scrollHeight}px`;
         }
     }, [systemPrompt]);
 
@@ -70,7 +70,7 @@ export const InitialChat = ({onChangeTemperature, onChangePrompt}) => {
                         }`,
                         }}
                         placeholder={
-                            'Enter a prompt or type "/" to select a prompt...' || ''
+                            'Enter a prompt.' || ''
                         }
                         value={systemPrompt || ''}
                         rows={1}

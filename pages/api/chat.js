@@ -24,6 +24,8 @@ export default async function handler(req) {
         const body = await req.json()
         const {messages, prompt, temperature} = body
 
+        console.log("Received prompt & temperature;", {prompt}, {temperature})
+
         var messagesToSend = [
             {
                 role: 'system',
@@ -32,7 +34,7 @@ export default async function handler(req) {
             ...messages,
         ]
 
-        console.log("SENDING THESE MESSAGES", messagesToSend)
+        // console.log({messagesToSend})
 
         // const credential = new ClientSecretCredential(AZURE_TENANT_ID, AZURE_OPENAI_SUBSCRIPTION_ID, AZURE_OPENAI_SECRET);
         // const client = new OpenAIClient(AZURE_OPENAI_ENDPOINT, credential);
