@@ -1,14 +1,17 @@
 import { IconPlus, IconMistOff } from '@tabler/icons-react';
 
+import { Search } from './Search';
+
 export const Sidebar = ({
     sidePlacement,
     createItemTitle,
     items, 
     handleCreateItem,
     handleSearch,
-    component
+    component,
+    searchTerm
 }) => {
-    
+
     return (
         <div
             className={`fixed top-0 ${sidePlacement}-0 z-40 flex h-full w-[260px] flex-none flex-col space-y-2 bg-[#202123] p-2 text-[14px] transition-all sm:relative sm:top-0`}
@@ -27,6 +30,12 @@ export const Sidebar = ({
                     </button>
                 </>
             </div>
+
+            <Search
+                placeholder={'Search...'}
+                searchTerm={searchTerm}
+                onSearch={handleSearch}
+            />
             {items?.length > 0 ? (
                 <div className="pt-2">
                     {component}
