@@ -2,16 +2,18 @@ import {
     useEffect,
     useRef,
     useState,
-  } from 'react';
+} from 'react';
+
+import { DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE, DEFAULT_PROMPT_MAX_LENGTH } from '../../utils/constants'
 
 export const InitialChat = ({onChangeTemperature, onChangePrompt}) => {
 
     // --------- SystemPrompt stuff -------------        
-    const [systemPrompt, setSystemPrompt] = useState("You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.");
-    onChangePrompt(systemPrompt)
+    const [systemPrompt, setSystemPrompt] = useState(DEFAULT_SYSTEM_PROMPT);
+    // onChangePrompt(systemPrompt)
 
     const textareaRef = useRef(null);
-    const maxLength = 128
+    const maxLength = DEFAULT_PROMPT_MAX_LENGTH
 
     const handleSystemPromptChange = (event) => {
         const systemPrompt = event.target.value;
@@ -37,11 +39,11 @@ export const InitialChat = ({onChangeTemperature, onChangePrompt}) => {
     }, [systemPrompt]);
 
     // --------- Temperature stuff -----------
-    const [temperature, setTemperature] = useState(0.5);
-    onChangeTemperature(temperature)
+    const [temperature, setTemperature] = useState(DEFAULT_TEMPERATURE);
 
     const handleTemperatureChange = (event) => {
         const newTemperature = parseFloat(event.target.value);
+        
         setTemperature(newTemperature);
         onChangeTemperature(newTemperature);
     };
@@ -70,7 +72,7 @@ export const InitialChat = ({onChangeTemperature, onChangePrompt}) => {
                         }`,
                         }}
                         placeholder={
-                            'Enter a prompt.' || ''
+                            'Enter a prompt.'
                         }
                         value={systemPrompt || ''}
                         rows={1}

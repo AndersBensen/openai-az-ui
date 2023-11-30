@@ -9,6 +9,7 @@ import {
 import { ChatInput } from "./ChatInput"
 import { ChatMessage } from "./ChatMessage"
 import { InitialChat } from './InitialChat';
+import { saveSelectedConversation } from '../../utils/conversation'
 
 export const Chat = ({selectedConversation, updateSelectedConversation, onChangePrompt, onChangeTemperature}) => {
 
@@ -27,11 +28,13 @@ export const Chat = ({selectedConversation, updateSelectedConversation, onChange
     }, [selectedConversation]);
     
 
-    const handleSend = (message, role) => {
-        var updatedConversation = [
-            ...selectedConversation, 
-            {role: role, content: message}
-        ]
+    const handleSend = (message) => {
+        const updatedMessages = [...selectedConversation.messages];
+        const updatedConversation = {
+            ...selectedConversation,
+            messages: [...updatedMessages, message]
+        }
+
         updateSelectedConversation(updatedConversation)
     }
 
@@ -42,14 +45,14 @@ export const Chat = ({selectedConversation, updateSelectedConversation, onChange
                 ref={chatContainerRef}
             >
                 
-                {selectedConversation.length == 0 ? (
+                { selectedConversation?.messages.length == 0 ? (
                     <>
                         <InitialChat onChangePrompt={onChangePrompt} onChangeTemperature={onChangeTemperature}/>
                     </>
                     
                 ) : (
                     <>
-                        {selectedConversation.map((message, index) => (
+                        {selectedConversation?.messages.map((message, index) => (
                             <ChatMessage message={message} key={index}/>
                         ))
                         }

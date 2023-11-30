@@ -15,8 +15,8 @@ export const Promptbar = ({prompts, setPrompts}) => {
     const [searchTerm, setSearchTerm] = useState();
 
     const handleUpdatePrompts = (updatedPrompts) => {
-
         localStorage.setItem('prompts', JSON.stringify(updatedPrompts));
+
         setPrompts(updatedPrompts)
     }
 
@@ -38,6 +38,19 @@ export const Promptbar = ({prompts, setPrompts}) => {
         handleUpdatePrompts(updatedPrompts)
     };
 
+    const handleCreatePrompt = () => { 
+        const newPrompt = {
+            id: uuidv4(),
+            name: `Prompt ${prompts.length + 1}`,
+            description: '',
+            content: ''
+        }
+
+        const updatedPrompts = [...prompts, newPrompt]
+        
+        handleUpdatePrompts(updatedPrompts)
+    }
+
     useEffect(() => {
         if (searchTerm) {
             const searchedPrompts = prompts.filter((prompt) => {
@@ -55,19 +68,6 @@ export const Promptbar = ({prompts, setPrompts}) => {
             setFilteredPrompts(prompts)
         }
     }, [searchTerm, prompts]);
-
-    const handleCreatePrompt = () => { 
-        const newPrompt = {
-            id: uuidv4(),
-            name: `Prompt ${prompts.length + 1}`,
-            description: '',
-            content: ''
-        }
-
-        const updatedPrompts = [...prompts, newPrompt]
-        
-        handleUpdatePrompts(updatedPrompts)
-    }
 
     return (
         <Sidebar

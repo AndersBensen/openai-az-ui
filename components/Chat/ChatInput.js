@@ -43,7 +43,8 @@ export const ChatInput = ({sendMsg, textareaRef}) => {
           alert('Please enter a message');
           return;
         }
-        sendMsg(content, "user");
+        const message = {content: content, role: "user"}
+        sendMsg(message);
         setContent('');
     
         if (window.innerWidth < 640 && textareaRef && textareaRef.current) {
@@ -61,17 +62,17 @@ export const ChatInput = ({sendMsg, textareaRef}) => {
                         // ref={textareaRef}
                         className="m-0 w-full resize-none border-0 bg-transparent p-0 py-2 pr-8 pl-10 text-black dark:bg-transparent dark:text-white md:py-3 md:pl-10"
                         style={{
-                        resize: 'none',
-                        bottom: `${textareaRef?.current?.scrollHeight}px`,
-                        maxHeight: '400px',
-                        //   overflow: `${
-                        //     textareaRef.current && textareaRef.current.scrollHeight > 400
-                        //       ? 'auto'
-                        //       : 'hidden'
-                        //   }`,
+                          resize: 'none',
+                          bottom: `${textareaRef?.current?.scrollHeight}px`,
+                          maxHeight: '400px',
+                          //   overflow: `${
+                          //     textareaRef.current && textareaRef.current.scrollHeight > 400
+                          //       ? 'auto'
+                          //       : 'hidden'
+                          //   }`,
                         }}
                         placeholder={
-                        'Type a message or type "/" to select a prompt...' || ''
+                          'Type a message or type "/" to select a prompt...'
                         }
                         value={content}
                         rows={1}
