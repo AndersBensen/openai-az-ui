@@ -13,7 +13,7 @@ import {
 
 import SidebarActionButton from '@/components/Button/SidebarActionButton';
 
-export const Conversation = ({ conversation, selectedConversation, handleSaveSelectedConversation }) => {
+export const Conversation = ({ conversation, selectedConversation, conversations, handleSaveConversations, handleSaveSelectedConversation }) => {
 
     const [isDeleting, setIsDeleting] = useState(false);
     const [isRenaming, setIsRenaming] = useState(false);
@@ -22,35 +22,45 @@ export const Conversation = ({ conversation, selectedConversation, handleSaveSel
     const handleEnterDown = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            selectedConversation && handleRenameConversation(selectedConversation);
+            selectedConversation && handleRenameConversation(selectedConversation, conversations);
         }
     };
-    
-    const handleUpdateConversation = (conversation) => {
-        console.log("We updated yes") //todo
+
+    const handleDeleteConversation = (conversation, conversations) => {
+        const updatedConversations = conversations.filter(
+            (c) => c.id !== conversation.id,
+        );
+        
+        handleSaveConversations(updatedConversations)
+        handleSaveSelectedConversation(updatedConversations[updatedConversations.length - 1])
     }
 
-    const handleDeleteConversation = (conversation) => {
-        console.log("deleted yall") //todo
-    }
-
-    const handleRenameConversation = (conversation) => {
+    const handleRenameConversation = (conversation, conversations) => {
         if (renameValue.trim().length > 0) {
-          handleUpdateConversation(conversation, {
-            key: 'name',
-            value: renameValue,
-          });
-          setRenameValue('');
-          setIsRenaming(false);
+            const updatedConversation = conversation
+            updatedConversation.name = renameValue
+            const updatedConversations = conversations.map(
+                (conversation) => {
+                    if (conversation.id === selectedConversation.id) {
+                        return updatedConversation;
+                    }
+                    return conversation;
+                },
+            );
+
+            handleSaveConversations(updatedConversations)
+            handleSaveSelectedConversation(updatedConversation)
+            setRenameValue('');
+            setIsRenaming(false);
         }
       };
     
     const handleConfirm = (e) => {
         e.stopPropagation();
         if (isDeleting) {
-            handleDeleteConversation(conversation);
+            handleDeleteConversation(conversation, conversations);
         } else if (isRenaming) {
-            handleRenameConversation(conversation);
+            handleRenameConversation(conversation, conversations);
         }
         setIsDeleting(false);
         setIsRenaming(false);
@@ -107,12 +117,19 @@ export const Conversation = ({ conversation, selectedConversation, handleSaveSel
                     onDragStart={(e) => handleDragStart(e, conversation)}
                 >
                 <IconMessage size={18} />
-                <div
-                    className={`relative max-h-5 flex-1 overflow-hidden text-ellipsis whitespace-nowrap break-all text-left text-[12.5px] leading-3 ${
-                    selectedConversation?.id === conversation.id ? 'pr-12' : 'pr-1'
-                    }`}
-                >
-                    {conversation.name}
+                <div>
+                    <h3
+                        className={`relative flex-1 overflow-hidden text-ellipsis whitespace-nowrap break-all text-gray-500 text-left text-[10px] leading-3 pb-1`}
+                    >
+                        Date Started: {conversation.dateCreated}
+                    </h3>
+                    <div
+                        className={`relative max-h-4 flex-1 overflow-hidden text-ellipsis whitespace-nowrap break-all text-left text-[12.5px] leading-3 ${
+                        selectedConversation?.id === conversation.id ? 'pr-12' : 'pr-1'
+                        }`}
+                    >
+                        {conversation.name}
+                    </div>
                 </div>
                 </button>
             )}

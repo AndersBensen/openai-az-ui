@@ -10,6 +10,7 @@ import { Chat } from "../components/Chat/Chat";
 
 import { saveSelectedConversation, saveConversations } from '../utils/conversation'
 import { DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE } from '../utils/constants'
+import { getCurrentDate } from '../utils/date'
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -48,7 +49,8 @@ export default function Home() {
       // If we did not have a conversation saved then we init a new one
       const newConversation = {
         id: uuidv4(),
-        name: 'New Conversation',
+        name: `New Conversation ${conversations.length + 1}`,
+        dateCreated: getCurrentDate(),
         messages: [],
         prompt: DEFAULT_SYSTEM_PROMPT,
         temperature: DEFAULT_TEMPERATURE
@@ -71,6 +73,8 @@ export default function Home() {
     setSelectedConversation(selectedConversation)
   }
 
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+
   // The "main" send function to send messages to chat & update accordingly
   const handleUpdateConversation = async (conversation) => {
     // We update the conversation with the one we sent
@@ -80,6 +84,8 @@ export default function Home() {
       temperature: currentTemperature
     }
     handleSaveSelectedConversation(sendingConversation)
+
+    sleep(500000)
 
     const messages = conversation.messages
     const chatBody = {
@@ -171,6 +177,8 @@ export default function Home() {
               selectedConversation={selectedConversation}
               handleSaveSelectedConversation={handleSaveSelectedConversation}
               handleSaveConversations={handleSaveConversations}
+              setSelectedConversation={setSelectedConversation}
+              setConversations={setConversations}
             />
 
             <div className="flex flex-1">
