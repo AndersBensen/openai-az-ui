@@ -51,10 +51,8 @@ export const Conversationbar = ({
             temperature: DEFAULT_TEMPERATURE
         };
 
-        var updatedConversations = [newConversation]
-
         handleSaveSelectedConversation(newConversation)
-        handleSaveConversations(updatedConversations)
+        handleSaveConversations([])
     }
     
     useEffect(() => {
