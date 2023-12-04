@@ -124,6 +124,13 @@ export default function Home() {
 
 
     var updatedConversation = null
+
+    if (conversation.messages.length === 1) {
+      const content = conversation.messages[0].content
+      const customName = content.length > 20 ? content.substring(0, 20) + '...' : content;
+      conversation.name = customName
+    }
+
     if (!response.ok) {
       // We do not save the last message sent from us if something went wrong
       messages.pop()
