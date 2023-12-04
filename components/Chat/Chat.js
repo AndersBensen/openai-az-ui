@@ -9,15 +9,14 @@ import {
 import { ChatInput } from "./ChatInput"
 import { ChatMessage } from "./ChatMessage"
 import { InitialChat } from './InitialChat';
-import { saveSelectedConversation } from '../../utils/conversation'
 
-export const Chat = ({selectedConversation, updateSelectedConversation, onChangePrompt, onChangeTemperature}) => {
+export const Chat = ({selectedConversation, handleSendChat, handleUpdateConversation}) => {
 
     const messagesEndRef = useRef(null);
     const chatContainerRef = useRef(null);
     const textareaRef = useRef(null);
 
-
+    
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
         textareaRef.current?.focus();
@@ -35,7 +34,7 @@ export const Chat = ({selectedConversation, updateSelectedConversation, onChange
             messages: [...updatedMessages, message]
         }
 
-        updateSelectedConversation(updatedConversation)
+        handleSendChat(updatedConversation)
     }
 
     return (
@@ -47,7 +46,20 @@ export const Chat = ({selectedConversation, updateSelectedConversation, onChange
                 
                 { selectedConversation?.messages.length == 0 ? (
                     <>
-                        <InitialChat onChangePrompt={onChangePrompt} onChangeTemperature={onChangeTemperature}/>
+                        <InitialChat 
+                            onChangePrompt={(prompt) =>
+                                handleUpdateConversation(selectedConversation, {
+                                    key: 'prompt',
+                                    value: prompt,
+                                })
+                            }
+                            onChangeTemperature={(temperature) =>
+                                handleUpdateConversation(selectedConversation, {
+                                    key: 'temperature',
+                                    value: temperature,
+                                })
+                              }
+                        />
                     </>
                     
                 ) : (

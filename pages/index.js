@@ -20,8 +20,8 @@ export default function Home() {
   // Conversation states
   const [conversations, setConversations] = useState([])
   const [selectedConversation, setSelectedConversation] = useState(null);
-  const [currentSystemPrompt, setCurrentSystemPrompt] = useState(null)
-  const [currentTemperature, setCurrentTemperature] = useState(null)
+  // const [currentSystemPrompt, setCurrentSystemPrompt] = useState(null)
+  // const [currentTemperature, setCurrentTemperature] = useState(null)
 
   // PromptBar states
   const [prompts, setPrompts] = useState([]);
@@ -43,8 +43,6 @@ export default function Home() {
       // If we had a conversation saved then we load in its state
       const parsedLoadedConversation = JSON.parse(loadedSelectedConversation)
       setSelectedConversation(parsedLoadedConversation)
-      setCurrentSystemPrompt(parsedLoadedConversation.prompt)
-      setCurrentTemperature(parsedLoadedConversation.temperature)
     } else {  
       // If we did not have a conversation saved then we init a new one
       const newConversation = {
@@ -73,25 +71,44 @@ export default function Home() {
     setSelectedConversation(selectedConversation)
   }
 
-  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  // const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+  // Generic function to update some attribute, e.g. temperature or prompt
+  const handleUpdateConversation = (conversation, data) => {
+      const updatedConversation = {
+        ...conversation,
+        [data.key]: data.value,
+      };
+
+      const updatedConversations = conversations.map((c) => {
+        if (c.id === updatedConversation.id) {
+          return updatedConversation;
+        }
+    
+        return c;
+      });
+
+      handleSaveConversations(updatedConversations)
+      handleSaveSelectedConversation(updatedConversation)
+  };
 
   // The "main" send function to send messages to chat & update accordingly
-  const handleUpdateConversation = async (conversation) => {
+  const handleSendChat = async (conversation) => {
     // We update the conversation with the one we sent
-    const sendingConversation = {
-      ...selectedConversation,
-      prompt: currentSystemPrompt,
-      temperature: currentTemperature
-    }
-    handleSaveSelectedConversation(sendingConversation)
+    // const sendingConversation = {
+    //   ...selectedConversation,
+    //   prompt: currentSystemPrompt,
+    //   temperature: currentTemperature
+    // }
+    handleSaveSelectedConversation(conversation)
 
-    sleep(500000)
+    // sleep(500000)
 
     const messages = conversation.messages
     const chatBody = {
       messages: messages,
-      prompt: currentSystemPrompt,
-      temperature: currentTemperature,
+      prompt: conversation.prompt,
+      temperature: conversation.temperature,
     };
 
     const body = JSON.stringify(chatBody);
@@ -113,7 +130,7 @@ export default function Home() {
       console.log({messages})
 
       updatedConversation = {
-        ...sendingConversation,
+        ...conversation,
         messages: [...messages]
       }
       handleSaveSelectedConversation(updatedConversation)
@@ -128,7 +145,7 @@ export default function Home() {
         {content: responeBody.content, role: "assistant"}
       ]
       updatedConversation = {
-        ...sendingConversation,
+        ...conversation,
         messages: [...updatedMessages]
       }
       handleSaveSelectedConversation(updatedConversation)
@@ -136,11 +153,11 @@ export default function Home() {
 
     // Save the selectedConversation in our conversationS as well
     const updatedConversations = conversations.map(
-      (conversation) => {
-        if (conversation.id === selectedConversation.id) {
+      (c) => {
+        if (c.id === conversation.id) {
           return updatedConversation;
         }
-        return conversation;
+        return c;
       },
     );
     if (updatedConversations.length === 0) {
@@ -177,16 +194,13 @@ export default function Home() {
               selectedConversation={selectedConversation}
               handleSaveSelectedConversation={handleSaveSelectedConversation}
               handleSaveConversations={handleSaveConversations}
-              setSelectedConversation={setSelectedConversation}
-              setConversations={setConversations}
             />
 
             <div className="flex flex-1">
               <Chat 
                 selectedConversation={selectedConversation} 
-                updateSelectedConversation={handleUpdateConversation}
-                onChangePrompt={setCurrentSystemPrompt}
-                onChangeTemperature={setCurrentTemperature}
+                handleSendChat={handleSendChat}
+                handleUpdateConversation={handleUpdateConversation}
               />
             </div>
 

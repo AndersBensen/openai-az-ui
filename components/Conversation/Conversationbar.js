@@ -16,17 +16,15 @@ export const Conversationbar = ({
     conversations, 
     selectedConversation, 
     handleSaveSelectedConversation, 
-    handleSaveConversations,
-    setSelectedConversation,
-    setConversations
+    handleSaveConversations
 }) => {
 
     const [filteredConversations, setFilteredConversations] = useState([]);
+    const [searchTerm, setSearchTerm] = useState();
 
     const handleCreateConversation = () => { 
         const newConversation = {
             id: uuidv4(),
-            // name: 'New Conversation',
             name: `New Conversation ${conversations.length + 1}`,
             dateCreated: getCurrentDate(),
             messages: [],
@@ -39,37 +37,64 @@ export const Conversationbar = ({
         handleSaveSelectedConversation(newConversation)
         handleSaveConversations(updatedConversations)
     }
+    
+    const handleClearConversation = () => {
+        localStorage.removeItem('conversations')
+        localStorage.removeItem('selectedConversation')
 
-    const handleUpdateConversation = () => {
+        const newConversation = {
+            id: uuidv4(),
+            name: `New Conversation 1`,
+            dateCreated: getCurrentDate(),
+            messages: [],
+            prompt: DEFAULT_SYSTEM_PROMPT,
+            temperature: DEFAULT_TEMPERATURE
+        };
 
+        var updatedConversations = [newConversation]
+
+        handleSaveSelectedConversation(newConversation)
+        handleSaveConversations(updatedConversations)
     }
     
-    const handleSearch = () => { 
+    useEffect(() => {
+        if (searchTerm) {
+            const searchedConversations = conversations.filter((conversation) => {
+                const searchable =
+                    conversation.name.toLowerCase() +
+                    ' ' +
+                    conversation.messages.map((message) => message.content).join(' ');
 
-    }
+                return searchable.includes(searchTerm.toLowerCase());
+            });
+            setFilteredConversations(searchedConversations)
+        } else {
+            setFilteredConversations(conversations)
+        }
+    }, [searchTerm, conversations]);
 
     return (
         <div>
             <Sidebar
                 sidePlacement={"right"}
                 createItemTitle={"New chat"}
-                items={conversations}
+                items={filteredConversations}
                 handleCreateItem={handleCreateConversation}
-                handleSearch={handleSearch}
+                handleSearch={setSearchTerm}
                 component={
                     <Conversations
-                        conversations={conversations}
+                        conversations={filteredConversations}
                         selectedConversation={selectedConversation}
                         handleSaveConversations={handleSaveConversations}
                         handleSaveSelectedConversation={handleSaveSelectedConversation}
-                        handleUpdateConversation={handleUpdateConversation}
+                        handleClearConversation={handleClearConversation}
                     />
                 }
+                searchTerm={searchTerm}
                 footerComponent={
                     <ClearConversations 
                         conversations={conversations}
-                        setSelectedConversation={setSelectedConversation}
-                        setConversations={setConversations}
+                        clearConversations={handleClearConversation}
                     />
                 }
             />

@@ -1,6 +1,12 @@
 import { Conversation } from './Conversation';
 
-export const Conversations = ({ conversations, selectedConversation, handleSaveConversations, handleSaveSelectedConversation, handleUpdateConversation }) => {
+export const Conversations = ({ 
+    conversations, 
+    selectedConversation, 
+    handleSaveConversations, 
+    handleSaveSelectedConversation, 
+    handleClearConversation
+ }) => {
 
     return (
         <div className="flex w-full flex-col gap-1">
@@ -15,7 +21,7 @@ export const Conversations = ({ conversations, selectedConversation, handleSaveC
                         conversations={conversations}
                         handleSaveConversations={handleSaveConversations}
                         handleSaveSelectedConversation={handleSaveSelectedConversation}
-                        // handleUpdateConversation={handleUpdateConversation}
+                        handleClearConversation={handleClearConversation}
                     />
             ))}
         </div>

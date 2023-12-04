@@ -2,16 +2,13 @@ import { useState } from 'react';
 
 import { IconCheck, IconTrash, IconX } from '@tabler/icons-react';
 
-export const ClearConversations = ({conversations, setConversations, setSelectedConversation}) => {
+export const ClearConversations = ({conversations, clearConversations}) => {
   const [isConfirming, setIsConfirming] = useState(false);
 
   // TODO; when we clear all conversations or clear just the last one we actually have to add a new default one as well, otehrwise it bugs out
   // TODO; search in conversations pls
   const handleClearConversations = () => {
-    localStorage.removeItem('conversations')
-    localStorage.removeItem('selectedConversation')
-    setConversations([])
-    setSelectedConversation(null)
+    clearConversations()
     setIsConfirming(false);
   };
 

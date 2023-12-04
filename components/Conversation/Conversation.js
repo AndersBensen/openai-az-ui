@@ -13,7 +13,14 @@ import {
 
 import SidebarActionButton from '@/components/Button/SidebarActionButton';
 
-export const Conversation = ({ conversation, selectedConversation, conversations, handleSaveConversations, handleSaveSelectedConversation }) => {
+export const Conversation = ({ 
+    conversation, 
+    selectedConversation, 
+    conversations, 
+    handleSaveConversations, 
+    handleSaveSelectedConversation,
+    handleClearConversation
+}) => {
 
     const [isDeleting, setIsDeleting] = useState(false);
     const [isRenaming, setIsRenaming] = useState(false);
@@ -26,13 +33,18 @@ export const Conversation = ({ conversation, selectedConversation, conversations
         }
     };
 
+    // If we delete the last conversation we do the same as when completely wiping
     const handleDeleteConversation = (conversation, conversations) => {
-        const updatedConversations = conversations.filter(
-            (c) => c.id !== conversation.id,
-        );
-        
-        handleSaveConversations(updatedConversations)
-        handleSaveSelectedConversation(updatedConversations[updatedConversations.length - 1])
+        if (conversations.length == 1) {
+            handleClearConversation()
+        } else {
+            const updatedConversations = conversations.filter(
+                (c) => c.id !== conversation.id,
+            );
+            
+            handleSaveConversations(updatedConversations)
+            handleSaveSelectedConversation(updatedConversations[updatedConversations.length - 1])
+        }
     }
 
     const handleRenameConversation = (conversation, conversations) => {
@@ -53,7 +65,7 @@ export const Conversation = ({ conversation, selectedConversation, conversations
             setRenameValue('');
             setIsRenaming(false);
         }
-      };
+    };
     
     const handleConfirm = (e) => {
         e.stopPropagation();

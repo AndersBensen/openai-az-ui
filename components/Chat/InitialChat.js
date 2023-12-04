@@ -10,8 +10,7 @@ export const InitialChat = ({onChangeTemperature, onChangePrompt}) => {
 
     // --------- SystemPrompt stuff -------------        
     const [systemPrompt, setSystemPrompt] = useState(DEFAULT_SYSTEM_PROMPT);
-    // onChangePrompt(systemPrompt)
-
+    
     const textareaRef = useRef(null);
     const maxLength = DEFAULT_PROMPT_MAX_LENGTH
 
@@ -43,7 +42,7 @@ export const InitialChat = ({onChangeTemperature, onChangePrompt}) => {
 
     const handleTemperatureChange = (event) => {
         const newTemperature = parseFloat(event.target.value);
-        
+
         setTemperature(newTemperature);
         onChangeTemperature(newTemperature);
     };

@@ -7,8 +7,8 @@ TODO;
 - (X) code/markdown output (Mostly, but something about globals.css is weird)
 - (X) save & chose prompts to the right
 - save & chose conversations to the left (must have)
-    - TODO; fix search
-    - TODO; fix new chat after deleting last chat
+    - (X) TODO; fix search
+    - (X) TODO; fix new chat after deleting last chat
     - TODO; fix add user chat to ui before chatgpt answers
     - TODO; add loading ui element when chatgpt is inferring
 - regenerate chat (should have)
