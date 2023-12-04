@@ -20,8 +20,7 @@ export default function Home() {
   // Conversation states
   const [conversations, setConversations] = useState([])
   const [selectedConversation, setSelectedConversation] = useState(null);
-  // const [currentSystemPrompt, setCurrentSystemPrompt] = useState(null)
-  // const [currentTemperature, setCurrentTemperature] = useState(null)
+  const [isInferring, setIsInferring] = useState(false)
 
   // PromptBar states
   const [prompts, setPrompts] = useState([]);
@@ -71,8 +70,6 @@ export default function Home() {
     setSelectedConversation(selectedConversation)
   }
 
-  // const sleep = ms => new Promise(r => setTimeout(r, ms));
-
   // Generic function to update some attribute, e.g. temperature or prompt
   const handleUpdateConversation = (conversation, data) => {
       const updatedConversation = {
@@ -94,15 +91,8 @@ export default function Home() {
 
   // The "main" send function to send messages to chat & update accordingly
   const handleSendChat = async (conversation) => {
-    // We update the conversation with the one we sent
-    // const sendingConversation = {
-    //   ...selectedConversation,
-    //   prompt: currentSystemPrompt,
-    //   temperature: currentTemperature
-    // }
     handleSaveSelectedConversation(conversation)
-
-    // sleep(500000)
+    setIsInferring(true)
 
     const messages = conversation.messages
     const chatBody = {
@@ -120,8 +110,7 @@ export default function Home() {
       },
       body: body,
     });
-
-
+    
 
     var updatedConversation = null
 
@@ -156,21 +145,23 @@ export default function Home() {
         messages: [...updatedMessages]
       }
       handleSaveSelectedConversation(updatedConversation)
+
+      // Save the selectedConversation in our conversationS as well, but only if everything was fine
+      const updatedConversations = conversations.map(
+        (c) => {
+          if (c.id === conversation.id) {
+            return updatedConversation;
+          }
+          return c;
+        },
+      );
+      if (updatedConversations.length === 0) {
+        updatedConversations.push(updatedConversation);
+      }
+      handleSaveConversations(updatedConversations);
     }
 
-    // Save the selectedConversation in our conversationS as well
-    const updatedConversations = conversations.map(
-      (c) => {
-        if (c.id === conversation.id) {
-          return updatedConversation;
-        }
-        return c;
-      },
-    );
-    if (updatedConversations.length === 0) {
-      updatedConversations.push(updatedConversation);
-    }
-    handleSaveConversations(updatedConversations);
+    setIsInferring(false)
   }
 
   
@@ -208,6 +199,7 @@ export default function Home() {
                 selectedConversation={selectedConversation} 
                 handleSendChat={handleSendChat}
                 handleUpdateConversation={handleUpdateConversation}
+                isInferring={isInferring}
               />
             </div>
 

@@ -1,20 +1,23 @@
 
 import {
-    IconSend,
-  } from '@tabler/icons-react';
+  IconSend,
+} from '@tabler/icons-react';
 
-  import {
-    useState,
-  } from 'react';
+import {
+  useState,
+} from 'react';
 
   
-export const ChatInput = ({sendMsg, textareaRef}) => {
+export const ChatInput = ({sendMsg, textareaRef, isInferring}) => {
 
     const [content, setContent] = useState();
 
     const handleChange = (e) => {
+        if (isInferring) {
+          return;
+        }
+
         const value = e.target.value;
-        // const maxLength = selectedConversation?.model.maxLength;
     
         if (value.length > 500) {
           alert(
@@ -31,7 +34,7 @@ export const ChatInput = ({sendMsg, textareaRef}) => {
       };
 
     const handleKeyDown = (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
+        if (e.key === 'Enter' && !e.shiftKey && !isInferring) {
             e.preventDefault();
             handleSend();
         }
@@ -43,6 +46,7 @@ export const ChatInput = ({sendMsg, textareaRef}) => {
           alert('Please enter a message');
           return;
         }
+
         const message = {content: content, role: "user"}
         sendMsg(message);
         setContent('');
@@ -86,8 +90,11 @@ export const ChatInput = ({sendMsg, textareaRef}) => {
                         className="absolute right-2 top-2 rounded-sm p-1 text-neutral-800 opacity-60 hover:bg-neutral-200 hover:text-neutral-900 dark:bg-opacity-50 dark:text-neutral-100 dark:hover:text-neutral-200"
                         onClick={handleSend}
                     >
+                      {isInferring ? (
+                        <div className="h-4 w-4 animate-spin rounded-full border-t-2 border-neutral-800 opacity-60 dark:border-neutral-100"></div>
+                      ) : (
                         <IconSend size={18} />
-                        
+                      )}
                     </button>
                 </div>
             </div>

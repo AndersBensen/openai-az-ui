@@ -6,11 +6,11 @@ TODO;
 - (X) initial prompt/temperature chosing
 - (X) code/markdown output (Mostly, but something about globals.css is weird)
 - (X) save & chose prompts to the right
-- save & chose conversations to the left (must have)
+- (X) save & chose conversations to the left (must have)
     - (X) TODO; fix search
     - (X) TODO; fix new chat after deleting last chat
-    - TODO; fix add user chat to ui before chatgpt answers
-    - TODO; add loading ui element when chatgpt is inferring
+    - (X) TODO; fix add user chat to ui before chatgpt answers
+    - (X) TODO; add loading ui element when chatgpt is inferring
 - regenerate chat (should have)
 - add loading ui when chat is answering (should have)
 - edit former messages (nice to have)
