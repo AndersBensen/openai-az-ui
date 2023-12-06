@@ -91,7 +91,7 @@ export const Chat = ({selectedConversation, handleSendChat, handleUpdateConversa
             </div>
             <ChatInput 
                 sendMsg={handleSend}
-                textareaRef={textareaRef}
+                // textareaRef={textareaRef} //TODO; this might break something, i initted a new one in the component
                 isInferring={isInferring}
             />
         </div>

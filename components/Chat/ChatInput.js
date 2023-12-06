@@ -4,13 +4,17 @@ import {
 } from '@tabler/icons-react';
 
 import {
+  useEffect,
   useState,
+  useRef,
 } from 'react';
 
+import { DEFAULT_INPUT_MAX_LENGTH } from '../../utils/constants'
   
-export const ChatInput = ({sendMsg, textareaRef, isInferring}) => {
+export const ChatInput = ({sendMsg, isInferring}) => {
 
     const [content, setContent] = useState();
+    const textareaRef = useRef(null);
 
     const handleChange = (e) => {
         if (isInferring) {
@@ -19,18 +23,12 @@ export const ChatInput = ({sendMsg, textareaRef, isInferring}) => {
 
         const value = e.target.value;
     
-        if (value.length > 500) {
-          alert(
-            t(
-              `Message limit is {{maxLength}} characters. You have entered {{valueLength}} characters.`,
-              { maxLength: 500, valueLength: value.length },
-            ),
-          );
+        if (value.length > DEFAULT_INPUT_MAX_LENGTH) {
+          alert("Message limit is " + DEFAULT_INPUT_MAX_LENGTH + " characters. You have entered " + value.length + " characters.");
           return;
         }
     
         setContent(value);
-        // updatePromptListVisibility(value);
       };
 
     const handleKeyDown = (e) => {
@@ -56,6 +54,15 @@ export const ChatInput = ({sendMsg, textareaRef, isInferring}) => {
         }
       };
 
+    useEffect(() => {
+      if (textareaRef && textareaRef.current) {
+        textareaRef.current.style.height = 'inherit';
+        textareaRef.current.style.height = `${textareaRef.current?.scrollHeight}px`;
+        textareaRef.current.style.overflow = `${
+          textareaRef?.current?.scrollHeight > 400 ? 'auto' : 'hidden'
+        }`;
+      }
+    }, [content]);
 
     return (
         
@@ -63,25 +70,23 @@ export const ChatInput = ({sendMsg, textareaRef, isInferring}) => {
             <div className="stretch mx-2 mt-4 flex flex-row gap-3 last:mb-2 md:mx-4 md:mt-[52px] md:last:mb-6 lg:mx-auto lg:max-w-3xl">
                 <div className="relative mx-2 flex w-full flex-grow flex-col rounded-md border border-black/10 bg-white shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:border-gray-900/50 dark:bg-[#40414F] dark:text-white dark:shadow-[0_0_15px_rgba(0,0,0,0.10)] sm:mx-4">
                     <textarea
-                        // ref={textareaRef}
+                        ref={textareaRef}
                         className="m-0 w-full resize-none border-0 bg-transparent p-0 py-2 pr-8 pl-10 text-black dark:bg-transparent dark:text-white md:py-3 md:pl-10"
                         style={{
                           resize: 'none',
                           bottom: `${textareaRef?.current?.scrollHeight}px`,
                           maxHeight: '400px',
-                          //   overflow: `${
-                          //     textareaRef.current && textareaRef.current.scrollHeight > 400
-                          //       ? 'auto'
-                          //       : 'hidden'
-                          //   }`,
+                          overflow: `${
+                            textareaRef.current && textareaRef.current.scrollHeight > 400
+                              ? 'auto'
+                              : 'hidden'
+                          }`,
                         }}
                         placeholder={
-                          'Type a message or type "/" to select a prompt...'
+                          'Type a message to chat.'
                         }
                         value={content}
                         rows={1}
-                        // onCompositionStart={() => setIsTyping(true)}
-                        // onCompositionEnd={() => setIsTyping(false)}
                         onChange={handleChange}
                         onKeyDown={handleKeyDown}
                     />

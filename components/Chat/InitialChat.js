@@ -10,7 +10,7 @@ export const InitialChat = ({onChangeTemperature, onChangePrompt}) => {
 
     // --------- SystemPrompt stuff -------------        
     const [systemPrompt, setSystemPrompt] = useState(DEFAULT_SYSTEM_PROMPT);
-    
+
     const textareaRef = useRef(null);
     const maxLength = DEFAULT_PROMPT_MAX_LENGTH
 
@@ -19,7 +19,7 @@ export const InitialChat = ({onChangeTemperature, onChangePrompt}) => {
         const systemtPromptLength = systemPrompt.length
     
         if (systemtPromptLength > maxLength) {
-          alert(`Prompt limit is ${maxLength}} characters. You have entered ${systemtPromptLength} characters.`);
+          alert(`Prompt limit is ${maxLength} characters. You have entered ${systemtPromptLength} characters.`);
           return;
         }
     

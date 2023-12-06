@@ -6,4 +6,7 @@ export const DEFAULT_TEMPERATURE =
     parseFloat(process.env.DEFAULT_TEMPERATURE || "0.5");
 
 export const DEFAULT_PROMPT_MAX_LENGTH = 
-    parseFloat(process.env.DEFAULT_PROMPT_MAX_LENGTH || "128");
+    parseInt(process.env.DEFAULT_PROMPT_MAX_LENGTH || "256");
+
+export const DEFAULT_INPUT_MAX_LENGTH = 
+    parseInt(process.env.DEFAULT_INPUT_MAX_LENGTH || "12000");

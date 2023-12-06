@@ -11,8 +11,8 @@ TODO;
     - (X) TODO; fix new chat after deleting last chat
     - (X) TODO; fix add user chat to ui before chatgpt answers
     - (X) TODO; add loading ui element when chatgpt is inferring
+- (X) add loading ui when chat is answering (should have)
 - regenerate chat (should have)
-- add loading ui when chat is answering (should have)
 - edit former messages (nice to have)
 - search for prompts in init (nice to have)
 - finish up & clean
