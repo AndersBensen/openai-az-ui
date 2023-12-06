@@ -2,7 +2,7 @@ import {
     IconCopy,
     IconRobot,
     IconUser,
-  } from '@tabler/icons-react';
+} from '@tabler/icons-react';
 
 
 import { CodeBlock } from '../Markdown/CodeBlock';
@@ -13,7 +13,7 @@ import remarkMath from 'remark-math';
 import rehypeMathjax from 'rehype-mathjax';
 
 export const ChatMessage = ({message, index}) => {
-  
+
     const copyOnClick = () => {
       if (!navigator.clipboard) return;
       navigator.clipboard.writeText(message.content)

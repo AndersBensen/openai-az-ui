@@ -5,18 +5,28 @@ export const config = {
     runtime: 'edge',
 };
 
-export const DEFAULT_SYSTEM_PROMPT =
-  process.env.NEXT_PUBLIC_DEFAULT_SYSTEM_PROMPT ||
-  "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.";
-export const DEFAULT_TEMPERATURE = parseFloat(process.env.NEXT_PUBLIC_DEFAULT_TEMPERATURE || "1");
-
-
 export const AZURE_OPENAI_MAX_TOKENS = parseInt(process.env.AZURE_OPENAI_MAX_TOKENS) || null; 
+export const AZURE_OPENAI_MODEL_CHAR_LIMIT = parseInt(process.env.AZURE_OPENAI_MAX_TOKENS) || 14000; 
 export const AZURE_OPENAI_ENDPOINT = process.env.AZURE_OPENAI_ENDPOINT || '';
 export const AZURE_OPENAI_SUBSCRIPTION_ID = process.env.AZURE_OPENAI_SUBSCRIPTION_ID || '';
 export const AZURE_OPENAI_SECRET = process.env.AZURE_OPENAI_SECRET || '';
 export const AZURE_OPENAI_DEPLOYMENT_ID = process.env.AZURE_OPENAI_DEPLOYMENT_ID || '';
 export const AZURE_TENANT_ID = process.env.AZURE_TENANT_ID || '';
+
+
+// const countCharLength = async (prompt, messages) => {
+//     console.log("estimating.... ")
+//     // console.log({messages})
+    
+//     var charCount = prompt.length
+//     for (let i = messages.length - 1; i >= 0; i--) {
+//         const message = messages[i];
+//         const contentLength = message.content.length
+//         charCount += contentLength;
+//     }
+//     console.log("estimated; " + charCount)
+//     return charCount
+// }
 
 
 export default async function handler(req) {
@@ -39,14 +49,26 @@ export default async function handler(req) {
         // const credential = new ClientSecretCredential(AZURE_TENANT_ID, AZURE_OPENAI_SUBSCRIPTION_ID, AZURE_OPENAI_SECRET);
         // const client = new OpenAIClient(AZURE_OPENAI_ENDPOINT, credential);
 
-        // const result = await client.getChatCompletions(
-        //     AZURE_OPENAI_DEPLOYMENT_ID, 
-        //     messagesToSend,
-        //     {
-        //         maxTokens: AZURE_OPENAI_MAX_TOKENS, 
-        //         temperature: temperature
-        //     }
-        // );
+        // var result = null
+        // if (AZURE_OPENAI_MAX_TOKENS) {
+        //     result = await client.getChatCompletions(
+        //         AZURE_OPENAI_DEPLOYMENT_ID, 
+        //         messagesToSend,
+        //         {
+        //             maxTokens: AZURE_OPENAI_MAX_TOKENS, 
+        //             temperature: temperature
+        //         }
+        //     );
+            
+        // } else {
+        //     result = await client.getChatCompletions(
+        //         AZURE_OPENAI_DEPLOYMENT_ID, 
+        //         messagesToSend,
+        //         {
+        //             temperature: temperature
+        //         }
+        //     );
+        // }
 
         // let content = result.choices[0].message.content
         // console.log(messages.slice(-1)[0].content)
