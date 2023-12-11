@@ -125,8 +125,6 @@ export const Conversation = ({
                         : ''
                     }`}
                     onClick={() => handleSaveSelectedConversation(conversation)}
-                    draggable="true"
-                    onDragStart={(e) => handleDragStart(e, conversation)}
                 >
                 <IconMessage size={18} />
                 <div>

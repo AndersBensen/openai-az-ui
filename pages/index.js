@@ -120,6 +120,8 @@ export default function Home() {
       conversation.name = customName
     }
 
+    const responeBody = await response.json()
+
     if (!response.ok) {
       // We do not save the last message sent from us if something went wrong
       messages.pop()
@@ -130,11 +132,10 @@ export default function Home() {
         messages: [...messages]
       }
       handleSaveSelectedConversation(updatedConversation)
-      alert('We had trouble reaching GPT currently, please try again later.');
+      alert(responeBody.content);
     }
     else {
       // If everything went fine we update our conversation with what GPT responded
-      const responeBody = await response.json()
 
       const updatedMessages = [
         ...messages,
