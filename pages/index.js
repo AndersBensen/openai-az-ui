@@ -125,7 +125,6 @@ export default function Home() {
     if (!response.ok) {
       // We do not save the last message sent from us if something went wrong
       messages.pop()
-      console.log({messages})
 
       updatedConversation = {
         ...conversation,
