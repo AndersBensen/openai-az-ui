@@ -1,7 +1,9 @@
+import { encryptedStorage } from '../utils/storage'
+
 export const saveSelectedConversation = (selectedConversation) => {
-    localStorage.setItem('selectedConversation', JSON.stringify(selectedConversation));
+    encryptedStorage.setItem('selectedConversation', selectedConversation);
 };
   
 export const saveConversations = (conversations) => {
-    localStorage.setItem('conversations', JSON.stringify(conversations));
+    encryptedStorage.setItem('conversations', conversations);
 };

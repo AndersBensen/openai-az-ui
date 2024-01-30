@@ -5,6 +5,7 @@ import {
 
 import { Sidebar } from '../Sidebar/Sidebar';
 import { Prompts } from './Prompts';
+import { encryptedStorage } from '../../utils/storage'
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -15,7 +16,7 @@ export const Promptbar = ({prompts, setPrompts}) => {
     const [searchTerm, setSearchTerm] = useState();
 
     const handleUpdatePrompts = (updatedPrompts) => {
-        localStorage.setItem('prompts', JSON.stringify(updatedPrompts));
+        encryptedStorage.setItem('prompts', updatedPrompts);
 
         setPrompts(updatedPrompts)
     }

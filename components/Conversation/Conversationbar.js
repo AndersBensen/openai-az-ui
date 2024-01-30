@@ -7,11 +7,11 @@ import { Sidebar } from '../Sidebar/Sidebar';
 import { Conversations } from './Conversations';
 import { DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE } from '../../utils/constants'
 import { getCurrentDate } from '../../utils/date'
+import { encryptedStorage } from '../../utils/storage'
 
 import { v4 as uuidv4 } from 'uuid';
 import { ClearConversations } from './ClearConversations';
 
-// todo, add; search, delete & rename conv, delete all convs
 export const Conversationbar = ({ 
     conversations, 
     selectedConversation, 
@@ -39,8 +39,8 @@ export const Conversationbar = ({
     }
     
     const handleClearConversation = () => {
-        localStorage.removeItem('conversations')
-        localStorage.removeItem('selectedConversation')
+        encryptedStorage.removeItem('conversations')
+        encryptedStorage.removeItem('selectedConversation')
 
         const newConversation = {
             id: uuidv4(),

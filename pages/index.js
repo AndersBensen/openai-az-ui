@@ -11,6 +11,7 @@ import { Chat } from "../components/Chat/Chat";
 import { saveSelectedConversation, saveConversations } from '../utils/conversation'
 import { DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE } from '../utils/constants'
 import { getCurrentDate } from '../utils/date'
+import { encryptedStorage } from '../utils/storage'
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -27,21 +28,21 @@ export default function Home() {
   
   // THINGS TO DO THERE IS A STATE CHANGE OF THE MAIN PAGE (or on first render)
   useEffect(() => {
-    const loadedPrompts = localStorage.getItem('prompts');
+    const loadedPrompts = encryptedStorage.getItem('prompts');
     if (loadedPrompts) {
-        setPrompts(JSON.parse(loadedPrompts))
+        setPrompts(loadedPrompts)
     }
 
-    const loadedConversations = localStorage.getItem('conversations');
+    const loadedConversations = encryptedStorage.getItem('conversations');
+    // make function here to see if conversation is older than 30 days and then wipe that shit (also selectedConversation)
     if (loadedConversations) {
-      setConversations(JSON.parse(loadedConversations))
+      setConversations(loadedConversations)
     }
 
-    const loadedSelectedConversation = localStorage.getItem('selectedConversation')
+    const loadedSelectedConversation = encryptedStorage.getItem('selectedConversation')
     if (loadedSelectedConversation) {
       // If we had a conversation saved then we load in its state
-      const parsedLoadedConversation = JSON.parse(loadedSelectedConversation)
-      setSelectedConversation(parsedLoadedConversation)
+      setSelectedConversation(loadedSelectedConversation)
     } else {  
       // If we did not have a conversation saved then we init a new one
       const newConversation = {
