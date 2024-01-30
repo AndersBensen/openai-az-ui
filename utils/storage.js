@@ -1,4 +1,4 @@
 import { EncryptedStorage } from '../utils/crypto'
 
-const salt = process.env.NEXT_PUBLIC_SALT
-export const encryptedStorage = new EncryptedStorage(salt);
+const sec = process.env.NEXT_PUBLIC_SEC
+export const encryptedStorage = new EncryptedStorage(sec);

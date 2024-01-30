@@ -10,7 +10,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "crypto-js": "^4.2.0",
     "@dqbd/tiktoken": "^1.0.7",
     "@azure/identity": "^3.3.2",
     "@azure/openai": "^1.0.0-beta.7",
